@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use DB;
 class CategoryController extends Controller
 {
     /**
@@ -46,17 +46,6 @@ class CategoryController extends Controller
         $category->cat_status= $request->input('cat_status');
         $category->save();
         return response()->json(['status'=>1]);
-//        $request->validate([
-//            'name'=>'required',
-//            'description'=>'required',
-//            'slug'=>'required',
-//            'price'=>'required'
-//
-//
-//        ]);
-//        return Category::create($request->all());
-//        $category =(new Category)->paginate(10);
-//        return response()->json(['status'=>1,'data'=>$category]);
     }
 
     /**
@@ -94,16 +83,22 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'cat_name'=>'required',
-            'cat_slug'=>'required',
-        ]);
-        $category= Category::find($id);
+        $category =Category::find($id);
         $category->cat_name= $request->input('cat_name');
         $category->cat_slug= $request->input('cat_slug');
         $category->cat_status= $request->input('cat_status');
-        $category->update($id,$category->all());
-        return $category;
+        $category->update();
+        return response()->json(['status'=>1]);
+    }
+    public function loadData($request)
+    {
+        $data = [
+            'cat_name'=> $request->input('cat_name'),
+            'cat_slug'=> $request->input('cat_slug'),
+            'cat_status'=> $request->input('cat_status'),
+            'updated_at'=> $request->date('Y-m-d H:i:s'),
+        ];
+        return $data;
     }
 
     /**
@@ -114,6 +109,13 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $obj = new Category();
+        if($obj->where('id', $id)->delete())
+        {
+            return response()->json(['status'=>1]);
+        }else
+        {
+            return response()->json(['status'=>0]);
+        }
     }
 }
