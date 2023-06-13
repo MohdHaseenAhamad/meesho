@@ -46,7 +46,19 @@ class ProductController extends Controller
         $product->pro_price= $request->input('pro_price');
 
         $product->pro_stock= $request->input('pro_stock');
-        $product->pro_img= $request->input('pro_img');
+
+
+        if($request->hasFile('pro_img')){
+            $image2=$request->file('pro_img');
+            $reFullImage=time().'.'.$image2->getClientOriginalExtension();
+            $dest2=public_path('/images');
+            $image2->move($dest2,$reFullImage);
+        }else{
+            $reFullImage='na';
+        }
+//        dd($image_path);
+
+        $product->pro_img= $reFullImage;
         $product->pro_status= $request->input('pro_status');
         $product->save();
         return response()->json(['status'=>1]);
@@ -97,7 +109,17 @@ class ProductController extends Controller
         $product->pro_price= $request->input('pro_price');
 
         $product->pro_stock= $request->input('pro_stock');
-        $product->pro_img= $request->input('pro_img');
+        if($request->hasFile('pro_img')){
+            $image2=$request->file('pro_img');
+            $reFullImage=time().'.'.$image2->getClientOriginalExtension();
+            $dest2=public_path('/images');
+            $image2->move($dest2,$reFullImage);
+        }else{
+            $reFullImage='na';
+        }
+//        dd($image_path);
+
+        $product->pro_img= $reFullImage;
         $product->pro_status= $request->input('pro_status');
         $product->update();
         return response()->json(['status'=>1]);
