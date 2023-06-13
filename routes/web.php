@@ -19,3 +19,6 @@ Route::get('/', function () {
 Route::get('/category', function () {
     return view('admin/category/index');
 });
+Route::get('/category/add', function () {
+    return view('admin/category/form');
+});

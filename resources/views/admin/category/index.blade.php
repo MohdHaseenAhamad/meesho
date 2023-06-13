@@ -13,12 +13,12 @@
                 <div class="col-sm-6">
                     <h6>Category List</h6>
                 </div>
-                <!--<div class="col-sm-6">
+                <div class="col-sm-6">
                   <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Advanced Form</li>
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Category</li>
                   </ol>
-                </div>-->
+                </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -38,7 +38,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <a href="{{url('/admin/autoclave-report/add')}}" class="btn btn-block btn-success">Add
+                                <a href="{{url('/category/add')}}" class="btn btn-block btn-success">Add
                                     Category</a>
                             </h3>
 

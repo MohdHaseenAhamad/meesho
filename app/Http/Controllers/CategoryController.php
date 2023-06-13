@@ -25,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+//        return view('admin.category.form');
     }
 
     /**
@@ -36,7 +36,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'cat_name'=>'required',
+            'cat_slug'=>'required',
+        ]);
+        $category = new Category();
+        $category->cat_name= $request->input('cat_name');
+        $category->cat_slug= $request->input('cat_slug');
+        $category->cat_status= $request->input('cat_status');
+        $category->save();
+        return response()->json(['status'=>1]);
+//        $request->validate([
+//            'name'=>'required',
+//            'description'=>'required',
+//            'slug'=>'required',
+//            'price'=>'required'
+//
+//
+//        ]);
+//        return Category::create($request->all());
+//        $category =(new Category)->paginate(10);
+//        return response()->json(['status'=>1,'data'=>$category]);
     }
 
     /**
@@ -47,7 +67,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = new Category();
+        $categoryData=$category->find($id);
+        return response()->json(['status'=>1,'data'=>$categoryData]);
     }
 
     /**
@@ -58,7 +80,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = new Category();
+        $categoryData=$category->find($id);
+        return response()->json(['status'=>1,'data'=>$categoryData]);
     }
 
     /**
@@ -70,7 +94,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'cat_name'=>'required',
+            'cat_slug'=>'required',
+        ]);
+        $category= Category::find($id);
+        $category->cat_name= $request->input('cat_name');
+        $category->cat_slug= $request->input('cat_slug');
+        $category->cat_status= $request->input('cat_status');
+        $category->update($id,$category->all());
+        return $category;
     }
 
     /**
